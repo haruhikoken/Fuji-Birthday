@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Birthday Special! </title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    color: white;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* Background Blur */
+.bg {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('fuji.jpeg') center/cover no-repeat;
+    filter: blur(8px) brightness(40%);
+    z-index: -2;
+}
+
+/* Bintang */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    animation: blink 2s infinite alternate;
+}
+
+@keyframes blink {
+    from { opacity: 0.2; }
+    to { opacity: 1; }
+}
+
+h1 {
+    margin-top: 80px;
+    font-size: 36px;
+}
+
+#countdown {
+    font-size: 70px;
+    margin: 20px;
+}
+
+#message {
+    font-size: 20px;
+    margin: 30px;
+    min-height: 250px;
+    white-space: pre-line;
+    padding-bottom: 120px;
+}
+
+button {
+    padding: 15px 35px;
+    font-size: 18px;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    color: black;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#love {
+    font-size: 42px;
+    opacity: 0;
+    transition: opacity 3s ease;
+    margin-bottom: 100px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<h1>🎂 Untuk Fuji!!! </h1>
+
+<div id="countdown">3</div>
+<div id="message"></div>
+<button id="btn" onclick="start()" style="display:none;">Buka Hati Ini 💌</button>
+
+<div id="love">Selamat Hari Jadi! </div>
+
+<audio id="song">
+    <source src="lagu-romantis.mpeg" type="audio/wav">
+</audio>
+
+<script>
+
+/* Generate Bintang */
+for (let i = 0; i < 120; i++) {
+    let star = document.createElement("div");
+    star.classList.add("star");
+    star.style.left = Math.random() * 100 + "vw";
+    star.style.top = Math.random() * 100 + "vh";
+    document.body.appendChild(star);
+}
+
+/* Countdown */
+let count = 3;
+let countdownEl = document.getElementById("countdown");
+let btn = document.getElementById("btn");
+
+let timer = setInterval(function() {
+    count--;
+    if (count > 0) {
+        countdownEl.innerHTML = count;
+    } else {
+        clearInterval(timer);
+        countdownEl.innerHTML = "✨";
+        btn.style.display = "inline-block";
+    }
+}, 1000);
+
+/* Efek Ketik */
+function typeWriter(text, i, callback) {
+    if (i < text.length) {
+        document.getElementById("message").innerHTML += text.charAt(i);
+        setTimeout(function() {
+            typeWriter(text, i + 1, callback);
+        }, 35);
+    } else if (callback) {
+        callback();
+    }
+}
+
+function start() {
+    document.getElementById("song").play();
+    btn.style.display = "none";
+
+    let text =
+    "Hai Manis! \n\n" +
+    "Hari ini bukan cuma tentang bertambahnya usia kamu.\n" +
+    "Tapi tentang betapa berharganya kamu di dunia ini.\n\n" +
+    "Terima kasih sudah lahir.\n" +
+    "Terima kasih sudah bertahan.\n" +
+    "Terima kasih sudah menjadi seseorang yang kuat.\n\n" +
+    "Semoga setiap luka berubah jadi pelajaran.\n" +
+    "Setiap tangis berubah jadi kekuatan.\n" +
+    "Dan setiap doa kamu pelan-pelan dikabulkan Tuhan.\n\n" +
+    "Kalau suatu hari dunia terasa berat.\n" +
+    "Ingat, ada seseorang yang selalu mendoakan kamu diam-diam.\n\n" +
+    "Selamat ulang tahun, Fuji! \n";
+
+    typeWriter(text, 0, function() {
+        document.getElementById("love").style.opacity = "1";
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: "smooth"
+        });
+    });
+}
+
+</script>
+
+</body>
+</html>
